@@ -4,7 +4,7 @@ import GaggleEvent from './GaggleEvent.jsx';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-class SimpleMap extends Component {
+export default class GaggleMap extends Component {
   static defaultProps = {
     center: {
       lat: 32.7157,
@@ -21,18 +21,15 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: 'AIzaSyCPN9XdtzLoDC38pUETeH19QYs30isZlT8' }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          onChange={this.props.onChange}
         >
-          <GaggleEvent lat={32.7157} lng={-117.161} text='Stuff' />
-          <GaggleEvent lat={32.7257} lng={-117.161} text='Thing' />
-          {/* <AnyReactComponent
-            lat={32.7157}
-            lng={-117.161}
-            text="My Marker"
-          /> */}
+          {this.props.gaggles.map(function(gaggle) {
+            return <GaggleEvent lat={gaggle.latitude} lng={gaggle.longitude} text={gaggle.name}/>;
+          })}
+          {/* <GaggleEvent lat={32.7157} lng={-117.161} text='Stuff' />
+          <GaggleEvent lat={32.7257} lng={-117.161} text='Thing' /> */}
         </GoogleMapReact>
       </div>
     );
   }
 }
-
-export default SimpleMap;
